@@ -1,0 +1,5 @@
+C:\Users\stefan\source\repos\FootballLeague\Models\bin\Debug\Models.dll
+C:\Users\stefan\source\repos\FootballLeague\Models\bin\Debug\Models.pdb
+C:\Users\stefan\source\repos\FootballLeague\Models\obj\Debug\Models.csprojAssemblyReference.cache
+C:\Users\stefan\source\repos\FootballLeague\Models\obj\Debug\Models.dll
+C:\Users\stefan\source\repos\FootballLeague\Models\obj\Debug\Models.pdb

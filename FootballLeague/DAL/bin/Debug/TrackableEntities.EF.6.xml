@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TrackableEntities.EF.6</name>
+    </assembly>
+    <members>
+        <member name="T:TrackableEntities.EF6.DbContextExtensions">
+            <summary>
+            Extension methods for DbContext to persist trackable entities.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,TrackableEntities.ITrackable)">
+            <summary>
+            Update entity state on DbContext for an object graph.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="item">Object that implements ITrackable</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,System.Collections.Generic.IEnumerable{TrackableEntities.ITrackable})">
+            <summary>
+            Update entity state on DbContext for more than one object graph.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="items">Objects that implement ITrackable</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(TrackableEntities.EF6.InterceptorPool,TrackableEntities.ITrackable)">
+            <summary>
+            Update entity state on DbContext for an object graph with interception.
+            </summary>
+            <param name="pool">Pool of interceptors</param>
+            <param name="item">Object that implements ITrackable</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(TrackableEntities.EF6.InterceptorPool,System.Collections.Generic.IEnumerable{TrackableEntities.ITrackable})">
+            <summary>
+            Update entity state on DbContext for more than one object graph.
+            </summary>
+            <param name="pool">Pool of interceptors</param>
+            <param name="items">Objects that implement ITrackable</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.GetEntitySetName(System.Data.Entity.DbContext,System.Type)">
+            <summary>
+            For the given entity type return the EntitySet name qualified by container name.
+            </summary>
+            <param name="dbContext">Used to query and save changes to a database</param>
+            <param name="entityType">Type of an entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.LoadRelatedEntities(System.Data.Entity.DbContext,TrackableEntities.ITrackable,System.Boolean)">
+            <summary>
+            Load related entities for an object graph.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="item">Object that implement ITrackable</param>
+            <param name="loadAll">True to load all related entities, false to load only added entities</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.LoadRelatedEntities(System.Data.Entity.DbContext,System.Collections.Generic.IEnumerable{TrackableEntities.ITrackable},System.Boolean)">
+            <summary>
+            Load related entities for more than one object graph.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="items">Objects that implements ITrackable</param>
+            <param name="loadAll">True to load all related entities, false to load only added entities</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.LoadRelatedEntitiesAsync(System.Data.Entity.DbContext,TrackableEntities.ITrackable,System.Boolean)">
+            <summary>
+            Load related entities for an object graph asynchronously.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="item">Object that implement ITrackable</param>
+            <param name="loadAll">True to load all related entities, false to load only added entities</param>
+            <returns>A task that represents the asynchronous operation</returns>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.LoadRelatedEntitiesAsync(System.Data.Entity.DbContext,TrackableEntities.ITrackable,System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Load related entities for an object graph asynchronously.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="item">Object that implement ITrackable</param>
+            <param name="cancellationToken">A CancellationToken to observe while waiting for the task to complete.</param>
+            <param name="loadAll">True to load all related entities, false to load only added entities</param>
+            <returns>A task that represents the asynchronous operation.</returns>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.LoadRelatedEntitiesAsync(System.Data.Entity.DbContext,System.Collections.Generic.IEnumerable{TrackableEntities.ITrackable},System.Boolean)">
+            <summary>
+            Load related entities for more than one object graph asynchronously.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="items">Objects that implements ITrackable</param>
+            <param name="loadAll">True to load all related entities, false to load only added entities</param>
+            <returns>A task that represents the asynchronous operation.</returns>
+        </member>
+        <member name="M:TrackableEntities.EF6.DbContextExtensions.LoadRelatedEntitiesAsync(System.Data.Entity.DbContext,System.Collections.Generic.IEnumerable{TrackableEntities.ITrackable},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Load related entities for more than one object graph asynchronously.
+            </summary>
+            <param name="context">Used to query and save changes to a database</param>
+            <param name="items">Objects that implements ITrackable</param>
+            <param name="cancellationToken">A CancellationToken to observe while waiting for the task to complete.</param>
+            <param name="loadAll">True to load all related entities, false to load only added entities</param>
+            <returns>A task that represents the asynchronous operation.</returns>
+        </member>
+        <member name="T:TrackableEntities.EF6.Exceptions.RelationshipNotDeterminedException">
+            <summary>
+            Exception for state when the relationship cannot be determined for a given type and a givven property.
+            </summary>
+        </member>
+        <member name="T:TrackableEntities.EF6.Exceptions.TrackableEntitiesException">
+            <summary>
+            Base class for exceptions defined in Trackable Entities.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.EF6.Exceptions.TrackableEntitiesException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:TrackableEntitiesException"/> class.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.EF6.Exceptions.TrackableEntitiesException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:TrackableEntitiesException"/> class with a specified error message.
+            </summary>
+            <param name="message">A message that describes the error.</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.Exceptions.TrackableEntitiesException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:TrackableEntitiesException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception. If the <paramref name="innerException"/> parameter is not a null reference, the current exception is raised in a catch block that handles the inner exception.</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.Exceptions.RelationshipNotDeterminedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:RelationshipNotDeterminedException"/> class with a specified error message.
+            </summary>
+            <param name="message">A message that describes the error </param>
+        </member>
+        <member name="T:TrackableEntities.EF6.InterceptorExtensions">
+            <summary>
+            Extension methods for <see cref="T:System.Data.Entity.DbContext"/> and <see cref="T:TrackableEntities.EF6.InterceptorPool"/> with fluent API allowing
+            to add inteceptors (instances of <see cref="T:TrackableEntities.EF6.IStateInterceptor"/>) to <see cref="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,TrackableEntities.ITrackable)"/>.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.EF6.InterceptorExtensions.WithInterceptor(System.Data.Entity.DbContext,TrackableEntities.EF6.IStateInterceptor)">
+            <summary>
+            Injects interceptor implementing <see cref="T:TrackableEntities.EF6.IStateInterceptor"/> intto <see cref="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,TrackableEntities.ITrackable)"/>.
+            </summary>
+            <param name="dbContext"><see cref="T:System.Data.Entity.DbContext"/> used to query and save changes to a database</param>
+            <param name="interceptor">Instance of <see cref="T:TrackableEntities.EF6.IStateInterceptor"/></param>
+        </member>
+        <member name="M:TrackableEntities.EF6.InterceptorExtensions.WithInterceptor(TrackableEntities.EF6.InterceptorPool,TrackableEntities.EF6.IStateInterceptor)">
+            <summary>
+            Injects interceptor implementing <see cref="T:TrackableEntities.EF6.IStateInterceptor"/> into <see cref="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,TrackableEntities.ITrackable)"/>.
+            </summary>
+            <param name="pool">Pool of interceptors.</param>
+            <param name="interceptor">Instance of <see cref="T:TrackableEntities.EF6.IStateInterceptor"/></param>
+        </member>
+        <member name="M:TrackableEntities.EF6.InterceptorExtensions.WithStateChangeInterceptor``1(System.Data.Entity.DbContext,System.Func{``0,System.Nullable{TrackableEntities.EF6.RelationshipType},System.Nullable{System.Data.Entity.EntityState}})">
+            <summary>
+            Injects interceptor for setting explicitly the state of an entity into <see cref="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,TrackableEntities.ITrackable)"/>.
+            </summary>
+            <param name="dbContext"><see cref="T:System.Data.Entity.DbContext"/> used to query and save changes to a database</param>
+            <param name="stateSelector">Used for setting state of entity.</param>
+        </member>
+        <member name="M:TrackableEntities.EF6.InterceptorExtensions.WithStateChangeInterceptor``1(TrackableEntities.EF6.InterceptorPool,System.Func{``0,System.Nullable{TrackableEntities.EF6.RelationshipType},System.Nullable{System.Data.Entity.EntityState}})">
+            <summary>
+            Injects interceptor for setting explicitly the state of an entity into <see cref="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,TrackableEntities.ITrackable)"/>.
+            </summary>
+            <param name="pool">Pool of interceptors</param>
+            <param name="stateSelector">Used for setting state of entity</param>
+        </member>
+        <member name="T:TrackableEntities.EF6.InterceptorPool">
+            <summary>
+            Pool of interceptors.
+            </summary>
+        </member>
+        <member name="T:TrackableEntities.EF6.IStateInterceptor">
+            <summary>
+            Interface implemented by interceptors added to <see cref="M:TrackableEntities.EF6.DbContextExtensions.ApplyChanges(System.Data.Entity.DbContext,TrackableEntities.ITrackable)"/>.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.EF6.IStateInterceptor.GetEntityState(TrackableEntities.ITrackable,System.Nullable{TrackableEntities.EF6.RelationshipType})">
+            <summary>
+            Gets state of <paramref name="item"/> based on <paramref name="relationshipType"/>.
+            </summary>
+            <param name="item">Current item.</param>
+            <param name="relationshipType">Relationship of current item.</param>
+            <returns>State of <paramref name="item"/> based on <paramref name="relationshipType"/>.</returns>
+        </member>
+        <member name="T:TrackableEntities.EF6.RelationshipType">
+            <summary>
+            Type of relationship between entities.
+            </summary>
+        </member>
+        <member name="F:TrackableEntities.EF6.RelationshipType.ManyToOne">
+            <summary>Many to one relationship.</summary>
+        </member>
+        <member name="F:TrackableEntities.EF6.RelationshipType.OneToOne">
+            <summary>One to one relationship.</summary>
+        </member>
+        <member name="F:TrackableEntities.EF6.RelationshipType.ManyToMany">
+            <summary>Many to many relationship.</summary>
+        </member>
+        <member name="F:TrackableEntities.EF6.RelationshipType.OneToMany">
+            <summary>One to many relationship.</summary>
+        </member>
+        <member name="T:TrackableEntities.EF6.StateChangeInterceptor`1">
+            <summary>
+            Interceptor for setting explicitly the state of an entity.
+            </summary>
+            <typeparam name="TEntity">Type of entity.</typeparam>
+        </member>
+        <member name="M:TrackableEntities.EF6.StateChangeInterceptor`1.#ctor(System.Func{`0,System.Nullable{TrackableEntities.EF6.RelationshipType},System.Nullable{System.Data.Entity.EntityState}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:StateChangeInterceptor"/> class.
+            </summary>
+        </member>
+        <member name="M:TrackableEntities.EF6.StateChangeInterceptor`1.GetEntityState(TrackableEntities.ITrackable,System.Nullable{TrackableEntities.EF6.RelationshipType})">
+            <summary>
+            Gets state of <paramref name="item"/> based on <paramref name="relationshipType"/>.
+            </summary>
+            <param name="item">Current item.</param>
+            <param name="relationshipType">Relationship of current item.</param>
+            <returns>State of <paramref name="item"/> based on <paramref name="relationshipType"/>.</returns>
+        </member>
+    </members>
+</doc>

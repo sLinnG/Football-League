@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FootballLeagueModelStoreContainer" CdmEntityContainer="FootballLeagueEntities">
+    <EntitySetMapping Name="Matches">
+      <EntityTypeMapping TypeName="FootballLeagueModel.Match">
+        <MappingFragment StoreEntitySet="Matches">
+          <ScalarProperty Name="AwayTeamGoalsScored" ColumnName="AwayTeamGoalsScored" />
+          <ScalarProperty Name="HomeTeamGoalsScored" ColumnName="HomeTeamGoalsScored" />
+          <ScalarProperty Name="AwayTeamId" ColumnName="AwayTeamId" />
+          <ScalarProperty Name="HomeTeamId" ColumnName="HomeTeamId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="FootballLeagueModel.Team">
+        <MappingFragment StoreEntitySet="Teams">
+          <ScalarProperty Name="Loses" ColumnName="Loses" />
+          <ScalarProperty Name="Draws" ColumnName="Draws" />
+          <ScalarProperty Name="Wins" ColumnName="Wins" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

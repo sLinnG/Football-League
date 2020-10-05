@@ -1,0 +1,13 @@
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\Services.dll
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\Services.pdb
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\DAL.dll
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\EntityFramework.dll
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\DAL.pdb
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\DAL.dll.config
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\EntityFramework.xml
+C:\Users\stefan\source\repos\FootballLeague\Services\obj\Debug\Services.csprojAssemblyReference.cache
+C:\Users\stefan\source\repos\FootballLeague\Services\obj\Debug\Services.csproj.CopyComplete
+C:\Users\stefan\source\repos\FootballLeague\Services\obj\Debug\Services.dll
+C:\Users\stefan\source\repos\FootballLeague\Services\obj\Debug\Services.pdb
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\Models.dll
+C:\Users\stefan\source\repos\FootballLeague\Services\bin\Debug\Models.pdb

@@ -1,0 +1,35 @@
+﻿@model List<DAL.Team>
+    <div style="padding-top: 15px">
+        <button type="button" class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("AddTeam", "Teams") + "'");">Add Team</button>
+        @*<button type="button" class="btn btn-primary">Add Match</button>*@
+    </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Wins</th>
+            <th scope="col">Draws</th>
+            <th scope="col">Loses</th>
+            <th scope="col">Points</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+            var position = i + 1;
+        <tr>
+            <th scope="row">@position</th>
+            <td>@item.Name</td>
+            <td>@item.Wins</td>
+            <td>@item.Draws</td>
+            <td>@item.Loses</td>
+            <td>@item.Points</td>
+            <td>@Html.ActionLink("Edit", "EditTeam", new { id = item.Id }) | @Html.ActionLink("Delete", "DeleteTeam", new { id = item.Id }) </td>
+        </tr>
+        }
+    </tbody>
+</table>

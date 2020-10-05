@@ -1,0 +1,26 @@
+﻿@model List<DAL.Match>
+    <div style="padding-top: 15px">
+        <button type="button" class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("AddMatch", "Matches") + "'");">Add Match</button>
+        @*<button type="button" class="btn btn-primary">Add Match</button>*@
+    </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Matches</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+            var position = i + 1;
+        <tr>
+            <th scope="row">@position</th>
+            <td>@item.HomeTeam.Name  @item.HomeTeamGoalsScored - @item.AwayTeamGoalsScored  @item.AwayTeam.Name</td>
+            <td>@Html.ActionLink("Edit", "EditMatch", new { id = item.Id }) | @Html.ActionLink("Delete", "DeleteMatch", new { id = item.Id }) </td>
+        </tr>
+        }
+    </tbody>
+</table>
