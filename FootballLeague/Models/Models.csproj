@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TeamsComboBoxViewModel.cs" />
-    <Compile Include="MatchViewModel.cs" />
+    <Compile Include="DBModels\IIdentifiable.cs" />
+    <Compile Include="DBModels\Match.cs" />
+    <Compile Include="DBModels\Team.cs" />
+    <Compile Include="ViewModels\TeamsComboBoxViewModel.cs" />
+    <Compile Include="ViewModels\MatchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

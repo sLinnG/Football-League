@@ -1,29 +1,27 @@
-﻿using DAL;
-using DAL.UnitOfWork;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services
+﻿namespace Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Interfaces;
+    using Models;
+    using Models.DBModels;
+
     public class TeamsService : ITeamsService
     {
-        IUnitOfWork _unitOfWork;
-        public TeamsService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        private readonly IRepository repository;
 
+        public TeamsService(IRepository unitOfWork)
+        {
+            repository = unitOfWork;
+        }
 
         public bool AddNewTeamToDB(string name)
         {
             try
             {
-                _unitOfWork.TeamRepository.Insert(new Team() { Name = name });
-                _unitOfWork.Save();
+                repository.Insert(new Team() { Name = name });
+                repository.Save();
                 return true;
             }
             catch (Exception ex)
@@ -31,72 +29,59 @@ namespace Services
                 throw ex;
             }
         }
+
         public bool EditTeam(int id, string name)
         {
             try
             {
-                var team = _unitOfWork.TeamRepository.GetByID(id);
+                var team = repository.GetByID<Team>(id);
                 UpdateTeamName(ref team, name);
-                _unitOfWork.TeamRepository.Update(team);
-                _unitOfWork.Save();
+                repository.Update(team);
+                repository.Save();
                 return true;
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-            
+
         }
+
         private void UpdateTeamName(ref Team team, string name)
         {
             team.Name = name;
         }
-        public void ChangeName(int id, string name)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<Team> GetAll()
-        {
-            return _unitOfWork.TeamRepository.Get(null, teams => teams.OrderByDescending(x => x.Points)).ToList();
-        }
+            => repository.Get<Team>(null, teams => teams.OrderByDescending(x => x.Points)).ToList();
 
         public Team GetByID(int id)
-        {
-            return _unitOfWork.TeamRepository.GetByID(id);
-        }
-
-        public void AddNew()
-        {
-            throw new NotImplementedException();
-        }
+            => repository.GetByID<Team>(id);
 
         public bool Delete(int id)
         {
             try
             {
-                var team = _unitOfWork.TeamRepository.GetByIDWithMatches(id);
+                var team = repository.GetByID<Team>(id, t => t.AwayMatches, t => t.HomeMatches);
                 if (team.HomeMatches.Any())
                 {
-                    var homeMatches = _unitOfWork.MatchRepository.Get(x => x.HomeTeamId == id).Select(x => x.Id).ToList();
+                    var homeMatches = repository.Get<Match>(x => x.HomeTeamId == id).Select(x => x.Id);
                     foreach (var item in homeMatches)
                     {
-                        _unitOfWork.MatchRepository.Delete(item);
+                        repository.Delete<Match>(item);
                     }
                 }
                 if (team.AwayMatches.Any())
                 {
-                    var awayMatches = _unitOfWork.MatchRepository.Get(x => x.AwayTeamId == id).Select(x=>x.Id).ToList();
+                    var awayMatches = repository.Get<Match>(x => x.AwayTeamId == id).Select(x => x.Id);
                     foreach (var item in awayMatches)
                     {
-                        _unitOfWork.MatchRepository.Delete(item);
+                        repository.Delete<Match>(item);
                     }
                 }
-                //_unitOfWork.Save();
-                _unitOfWork.TeamRepository.Delete(team.Id);
-                _unitOfWork.Save();
-                ReCalculateTeamsPoints();
+
+                repository.Delete<Team>(team.Id);
+                repository.Save();
                 return true;
             }
             catch (Exception ex)
@@ -104,65 +89,18 @@ namespace Services
                 throw ex;
             }
         }
-        public void ReCalculateTeamsPoints() 
-        {
-            var teams = _unitOfWork.TeamRepository.GetAllWithMatches();
-            foreach (var team in teams)
-            {
-                int points = 0;
-                int homeWins = HomeMatchesWinsCalc(team);
-                int homeDraws = HomeMatchesDrawCalc(team);
-                int homeLoses = HomeMatchesLostCalc(team);
-                int awayWins = AwayMatchesWinsCalc(team);
-                int awayDraws = AwayMatchesDrawCalc(team);
-                int awayLoses = AwayMatchesLostCalc(team);
-                points += homeWins * 3;
-                points += homeDraws* 1;
-                points += awayWins * 3;
-                points += awayDraws * 1;
-                team.Points = points;
-                team.Wins = homeWins + awayWins;
-                team.Draws = homeDraws + awayDraws;
-                team.Loses = homeLoses + awayLoses;
-                _unitOfWork.TeamRepository.Update(team);
-            }
-            _unitOfWork.Save();
-        }
-        private int HomeMatchesWinsCalc(Team team)
-        {
-           return team.HomeMatches.Where(x => x.HomeTeamGoalsScored > x.AwayTeamGoalsScored).Count();
-        }
-        private int HomeMatchesDrawCalc(Team team)
-        {
-            return team.HomeMatches.Where(x => x.HomeTeamGoalsScored == x.AwayTeamGoalsScored).Count();
-        }
-        private int HomeMatchesLostCalc(Team team)
-        {
-            return team.HomeMatches.Where(x => x.HomeTeamGoalsScored < x.AwayTeamGoalsScored).Count();
-        }
-        private int AwayMatchesWinsCalc(Team team)
-        {
-            return team.AwayMatches.Where(x => x.AwayTeamGoalsScored > x.HomeTeamGoalsScored).Count();
-        }
-        private int AwayMatchesDrawCalc(Team team)
-        {
-            return team.AwayMatches.Where(x => x.AwayTeamGoalsScored == x.HomeTeamGoalsScored).Count();
-        }
-
-        private int AwayMatchesLostCalc(Team team)
-        {
-            return team.AwayMatches.Where(x => x.AwayTeamGoalsScored < x.HomeTeamGoalsScored).Count();
-        }
 
         public List<TeamsComboBoxViewModel> GetTeamsViewModel()
         {
-            var teams = _unitOfWork.TeamRepository.Get().ToList();
+            var teams = repository.Get<Team>();
             List<TeamsComboBoxViewModel> listOfTeams = new List<TeamsComboBoxViewModel>();
+
             for (int i = 0; i < teams.Count; i++)
             {
                 Team team = teams[i];
                 listOfTeams.Add(new TeamsComboBoxViewModel(team.Id, team.Name));
             };
+
             return listOfTeams;
         }
     }

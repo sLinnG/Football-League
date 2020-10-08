@@ -1,56 +1,58 @@
-﻿using DAL;
-using Models;
-//using Repositories.UnitOfWork;
-using Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace FootballLeague.Controllers
+﻿namespace FootballLeague.Controllers
 {
+    using System.Web.Mvc;
+    using Models.DBModels;
+    using Services;
+    using Services.Interfaces;
+
     public class TeamsController : Controller
     {
         // GET: Teams
-        //private IUnitOfWork _unitOfWork;
-        private ITeamsService _teamsService;
-        public TeamsController( ITeamsService teamsService)
+        private readonly ITeamsService teamsService;
+        private readonly IPointsCalculator pointsCalculator;
+
+        public TeamsController(ITeamsService teamsService, IPointsCalculator pointsCalculator)
         {
-            //_unitOfWork = unitOfWork;
-            _teamsService = teamsService;
+            this.teamsService = teamsService;
+            this.pointsCalculator = pointsCalculator;
         }
+
         public ActionResult Index()
         {
-            var model = _teamsService.GetAll();
+            var model = teamsService.GetAll();
             return View(model);
         }
+
         public ActionResult AddTeam()
         {
             var model = new Team();
             return View(model);
         }
+
         public ActionResult EditTeam(int id)
         {
-            var model = _teamsService.GetByID(id);
+            var model = teamsService.GetByID(id);
             return View("AddTeam", model);
         }
+
         [HttpPost]
         public ActionResult AddTeamToDB(string name)
         {
-            _teamsService.AddNewTeamToDB(name);
+            teamsService.AddNewTeamToDB(name);
             return RedirectToAction("Index");
         }
+
         [HttpPost]
-        public ActionResult UpdateTeam(int id,string name)
+        public ActionResult UpdateTeam(int id, string name)
         {
-            _teamsService.EditTeam(id, name);
+            teamsService.EditTeam(id, name);
             return RedirectToAction("Index");
         }
-        
+
         public ActionResult DeleteTeam(int id)
         {
-            _teamsService.Delete(id);
+            teamsService.Delete(id);
+            pointsCalculator.CalculatePoints();
             return RedirectToAction("Index");
         }
     }

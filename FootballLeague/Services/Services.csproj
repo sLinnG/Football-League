@@ -42,20 +42,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IMatchesService.cs" />
+    <Compile Include="Interfaces\IPointsCalculator.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ITeamsService.cs" />
     <Compile Include="Services\MatchesService.cs" />
+    <Compile Include="Services\PointsCalculator.cs" />
     <Compile Include="Services\TeamsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{2bc9b493-8fe7-4379-aac8-0fc1f2538627}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{5D046E16-204F-481E-8A60-1553C7B259A1}</Project>
       <Name>Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

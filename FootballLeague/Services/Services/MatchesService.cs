@@ -1,29 +1,32 @@
-﻿using DAL;
-using DAL.UnitOfWork;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services
+﻿namespace Services
 {
+    using System;
+    using System.Collections.Generic;
+    using Interfaces;
+    using Models;
+    using Models.DBModels;
+
     public class MatchesService : IMatchesService
     {
-        IUnitOfWork _unitOfWork;
-        public MatchesService(IUnitOfWork unitOfWork)
+        private readonly IRepository repository;
+
+        public MatchesService(IRepository repository)
         {
-            _unitOfWork = unitOfWork;
+            this.repository = repository;
         }
 
         public bool AddNewMatchToDB(int homeTeamId, int awayTeamId, int homeTeamGoalsScored, int AwayTeamGoalsScored)
         {
             try
             {
-                _unitOfWork.MatchRepository.Insert(new Match() { HomeTeamId= homeTeamId, AwayTeamId = awayTeamId,
-                    HomeTeamGoalsScored = homeTeamGoalsScored, AwayTeamGoalsScored = AwayTeamGoalsScored});
-                _unitOfWork.Save();
+                repository.Insert(new Match()
+                {
+                    HomeTeamId = homeTeamId,
+                    AwayTeamId = awayTeamId,
+                    HomeTeamGoalsScored = homeTeamGoalsScored,
+                    AwayTeamGoalsScored = AwayTeamGoalsScored
+                });
+                repository.Save();
                 return true;
             }
             catch (Exception ex)
@@ -36,8 +39,8 @@ namespace Services
         {
             try
             {
-                _unitOfWork.MatchRepository.Delete(id);
-                _unitOfWork.Save();
+                repository.Delete<Match>(id);
+                repository.Save();
                 return true;
             }
             catch (Exception ex)
@@ -51,10 +54,13 @@ namespace Services
         {
             try
             {
-                var match = _unitOfWork.MatchRepository.GetByID(id);
+                var match = repository.GetByID<Match>(id);
+
                 UpdateMatch(ref match, id, homeTeamId, awayTeamId, homeTeamGoalsScored, awayTeamGoalsScored);
-                _unitOfWork.MatchRepository.Update(match);
-                _unitOfWork.Save();
+                repository.Update(match);
+
+                repository.Save();
+
                 return true;
             }
             catch (Exception ex)
@@ -62,6 +68,7 @@ namespace Services
                 throw ex;
             }
         }
+
         private void UpdateMatch(ref Match match, int id, int homeTeamId, int awayTeamId, int homeTeamGoalsScored, int AwayTeamGoalsScored)
         {
             match.Id = id;
@@ -70,33 +77,58 @@ namespace Services
             match.HomeTeamGoalsScored = homeTeamGoalsScored;
             match.AwayTeamGoalsScored = AwayTeamGoalsScored;
         }
+
         public MatchViewModel CreateNewModel(List<TeamsComboBoxViewModel> listOfTeams)
-        {
-            return new MatchViewModel(listOfTeams);
-        }
+            => new MatchViewModel(listOfTeams);
+
+
         public List<Match> GetAll()
-        {
-            return _unitOfWork.MatchRepository.Get().ToList();
-        }
+            => repository.Get<Match>();
+
 
         public Match GetByID(int id)
-        {
-            return _unitOfWork.MatchRepository.GetByID(id);
-        }
+            => repository.GetByID<Match>(id);
+
+
         public MatchViewModel GetViewModelByID(int id, List<TeamsComboBoxViewModel> listOfTeams)
         {
-            var match = _unitOfWork.MatchRepository.GetByID(id);
-            return new MatchViewModel(listOfTeams,match.HomeTeamId, match.AwayTeamId, 
-                match.HomeTeamGoalsScored, match.AwayTeamGoalsScored, id);
+            var match = repository.GetByID<Match>(id);
+
+            return new MatchViewModel(
+                listOfTeams,
+                match.HomeTeamId,
+                match.AwayTeamId,
+                match.HomeTeamGoalsScored,
+                match.AwayTeamGoalsScored,
+                id);
         }
 
-        public MatchViewModel CreateNewModel(List<TeamsComboBoxViewModel> listOfTeams, int homeTeamId, int awayTeamId, int homeTeamGoalsScored, int awayTeamGoalsScored)
-        {
-            return new MatchViewModel(listOfTeams, homeTeamId, awayTeamId, homeTeamGoalsScored, awayTeamGoalsScored);
-        }
-        public MatchViewModel CreateNewModel(List<TeamsComboBoxViewModel> listOfTeams,int id, int homeTeamId, int awayTeamId, int homeTeamGoalsScored, int awayTeamGoalsScored)
-        {
-            return new MatchViewModel(listOfTeams, homeTeamId, awayTeamId, homeTeamGoalsScored, awayTeamGoalsScored, id);
-        }
+        public MatchViewModel CreateNewModel(
+            List<TeamsComboBoxViewModel> listOfTeams,
+            int homeTeamId,
+            int awayTeamId,
+            int homeTeamGoalsScored,
+            int awayTeamGoalsScored)
+            => new MatchViewModel(
+                listOfTeams,
+                homeTeamId,
+                awayTeamId,
+                homeTeamGoalsScored,
+                awayTeamGoalsScored);
+
+        public MatchViewModel CreateNewModel(
+            List<TeamsComboBoxViewModel> listOfTeams,
+            int id,
+            int homeTeamId,
+            int awayTeamId,
+            int homeTeamGoalsScored,
+            int awayTeamGoalsScored)
+            => new MatchViewModel(
+                listOfTeams,
+                homeTeamId,
+                awayTeamId,
+                homeTeamGoalsScored,
+                awayTeamGoalsScored,
+                id);
     }
 }

@@ -1,8 +1,7 @@
-﻿using System.Web;
-using System.Web.Mvc;
-
-namespace FootballLeague
+﻿namespace FootballLeague
 {
+    using System.Web.Mvc;
+
     public class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)

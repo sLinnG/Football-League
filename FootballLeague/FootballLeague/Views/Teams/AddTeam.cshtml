@@ -1,4 +1,4 @@
-﻿@model DAL.Team
+﻿@model Models.DBModels.Team
 @{
     var isNew = string.IsNullOrEmpty(Model.Name) ? true : false;
     var saveButtonText = isNew ? "Add" : "Save";

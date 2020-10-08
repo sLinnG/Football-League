@@ -1,28 +1,30 @@
-using DAL.UnitOfWork;
-using Services;
-using System.Web.Mvc;
-using Unity;
-using Unity.Mvc5;
-
-
 namespace FootballLeague
 {
+    using System.Configuration;
+    using System.Web.Mvc;
+    using DAL;
+    using Services;
+    using Services.Interfaces;
+    using Services.Services;
+    using Unity;
+    using Unity.Mvc5;
+
     public static class UnityConfig
     {
-        public static void RegisterComponents()
+        public static void RegisterComponents(ConnectionStringSettingsCollection connectionStrings)
         {
-			var container = new UnityContainer();
+            var container = new UnityContainer();
 
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
+            var connectionStringSettings = connectionStrings[nameof(FootballLeagueDbContext)];
+            var dbInstance = new FootballLeagueDbContext(connectionStringSettings.ConnectionString);
 
-            // e.g. container.RegisterType<ITestService, TestService>();
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
-            container.RegisterType<ITeamsService, TeamsService>();
-            container.RegisterType<IMatchesService, MatchesService>();
+            container.RegisterInstance(dbInstance)
+                    .RegisterSingleton<IRepository, FootballLeagueRepository>()
+                    .RegisterSingleton<IPointsCalculator, PointsCalculator>()
+                    .RegisterSingleton<ITeamsService, TeamsService>()
+                    .RegisterSingleton<IMatchesService, MatchesService>();
+
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-
-            
         }
     }
 }
